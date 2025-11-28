@@ -1,86 +1,123 @@
 <!DOCTYPE html>
 <html lang="ru">
-    <head>
-        <meta charset="UTF-8">
-        <title>KreaDex Bio</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- Подключаем Font Awesome через CDN -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-        <style>body { font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; background: #121212; color: #f5f5f5; } .bio-card { background: #1e1e1e; border-radius: 20px; padding: 25px; display: flex; gap: 20px; box-shadow: 0 6px 20px rgba(0,0,0,0.5); max-width: 850px; width: 90%; position: relative; flex-wrap: wrap; align-items: center; } /* фото */.bio-img { width: 230px; height: 200px; object-fit: cover; flex-shrink: 0; } /* инфо */.bio-info { flex: 1; display: flex; flex-direction: column; justify-content: flex-start; position: relative; } /* Переключатель языка */.lang-switch { margin-bottom: 15px; align-self: flex-end; } .lang-switch button { border: none; background: #2a2a2a; color: #f5f5f5; padding: 5px 10px; margin-left: 5px; border-radius: 10px; cursor: pointer; transition: background 0.2s; } .lang-switch button:hover { background: #444; } .bio-info h1, .bio-info p { margin: 0 0 20px; transition: opacity 0.3s ease; } .bio-info h1 { font-size: 24px; } .links { display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; position: relative; } .links a { font-size: 28px; color: #aaa; transition: color 0.3s, transform 0.2s; } .links a:hover { color: #fff; transform: scale(1.2); } .more { position: relative; } .more button { border: none; background: none; font-size: 22px; cursor: pointer; color: #aaa; transition: color 0.2s; } .more button:hover { color: #fff; } .more-content { display: none; position: absolute; top: 35px;  /* выпадает вниз под троеточием */ right: 0; background: #2a2a2a; padding: 15px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.6); width: 240px; z-index: 10; opacity: 0; transform: translateY(-10px); transition: opacity 0.3s ease, transform 0.3s ease; } .more-content.show { display: block; opacity: 1; transform: translateY(0); } .more-content a { display: inline-block;  /* вместо block */ margin-bottom: 5px;  /* небольшой отступ */ color: #aaa; text-decoration: none; font-size: 20px;  /* можно уменьшить шрифт */ transition: color 0.2s; } .more-content a:hover { color: #fff; text-decoration: underline; }
-            @media (max-width: 600px) {
-                .links {
-                    flex-wrap: wrap;          /* ссылки могут переноситься на новую строку */
-                    justify-content: center;  /* центрируем строки */
-                }
-                
-                .more-content {
-                    top: auto;
-                    left: 50%;                /* центрируем относительно кнопки */
-                    transform: translateX(-50%); /* точное центрирование */
-                    bottom: 40px;             /* немного снизу, под кнопкой */
-                }
-            }
-        </style>
-    </head>
-    <body>
-        <div class="bio-card">
-            <!-- Фото -->
-            <img src="banner.png" alt="Фото" class="bio-img">
-            <!-- Инфо -->
-            <div class="bio-info">
-                <!-- Переключатель языка -->
-                <div class="lang-switch">
-                    <button onclick="setLang('ru')">RU</button>
-                    <button onclick="setLang('en')">EN</button>
+<head>
+    <meta charset="UTF-8">
+    <title>KreaDex Bio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="bio-style.css">
+    <link rel="stylesheet" href="game-style.css">
+    <link rel="stylesheet" href="projects-style.css">
+</head>
+<body>
+    <!-- Canvas для игры "Жизнь" -->
+    <canvas id="gameCanvas"></canvas>
+    <!-- Элементы управления игрой -->
+    <div class="controls-toggle" id="controlsToggle">⚙️</div>
+    <div class="controls-panel" id="controlsPanel">
+        <div class="control-group">
+            <div class="control-label">Управление</div>
+            <div class="buttons-row">
+                <button type="button" id="startBtn">Старт</button>
+                <button type="button" id="pauseBtn" disabled>Пауза</button>
+                <button type="button" id="stepBtn">Шаг</button>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="buttons-row">
+                <button type="button" id="clearBtn">Очистить</button>
+                <button type="button" id="randomBtn">Случайно</button>
+                <button type="button" id="removeRandomBtn">Убрать 50%</button>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="control-label">Размер кисти</div>
+            <div class="slider-control">
+                <input type="range" id="brushSize" min="1" max="8" value="3">
+                <span id="brushSizeValue">3</span>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="control-label">Скорость</div>
+            <div class="slider-control">
+                <input type="range" id="speedSlider" min="30" max="300" value="180">
+                <span id="speedValue">180</span>
+            </div>
+        </div>
+        <a class="control-label" href="game.html">Отдельная страница</a>
+    </div>
+    <div class="stats" id="stats">
+        <div class="stat-item">
+            <div class="stat-value" id="generation">0</div>
+            <div class="stat-label">Поколение</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value" id="liveCells">0</div>
+            <div class="stat-label">Клеток</div>
+        </div>
+    </div>
+    <div class="hint">© KreaDex 2025</div>
+
+    <!-- Био карточка -->
+    <div class="bio-card">
+        <img src="banner.png" alt="Фото" class="bio-img">
+        <div class="bio-info">
+            <div class="lang-switch">
+                <button type="button" onclick="setLang('ru')">RU</button>
+                <button type="button" onclick="setLang('en')">EN</button>
+            </div>
+            <h1 id="name">KreaDex</h1>
+            <p id="desc">
+                Меня зовут Паша, иногда я известен под прозвищами Пахан или Паханко. Мне 14 лет. <br><br>
+                Изучаю программирование. Частично знаю Python. Работал в Blender 3D. Художник, дизайнер, монтажёр, моделлер. 
+                Больше всего интересует игра Minecraft. В последнее время очень интересует программирование. <br><br>
+                Пытаюсь сделать интересные проекты.
+            </p>
+            <div class="links">
+                <a href="https://t.me/kreadex" title="Telegram"><i class="fab fa-telegram"></i></a>
+                <a href="https://x.com/kreadexx" title="X"><i class="fab fa-x-twitter"></i></a>
+                <a href="https://youtube.com/@kreadex" title="YouTube"><i class="fab fa-youtube"></i></a>
+                <a href="https://discord.gg/5evUH6BbCV" title="Discord"><i class="fab fa-discord"></i></a>
+                <a href="https://github.com/kreadex" title="GitHub"><i class="fab fa-github"></i></a>
+                <a href="https://boosty.to/pahan3568" title="Boosty"><i class="fa-solid fa-money-bill-wave"></i></a>
+                <a href="https://www.twitch.tv/kreadex" title="Twitch"><i class="fab fa-twitch"></i></a>
+                <a href="https://www.artstation.com/kreadex" title="ArtStation"><i class="fab fa-artstation"></i></a>
+                <div class="more">
+                    <button type="button" onclick="toggleMore()">⋮</button>
+                    <div class="more-content" id="moreContent">
+                        <a href="https://www.donationalerts.com/r/kreadex">Donation Alerts</a>
+                        <br><a href="https://modrinth.com/user/kreadex">Modrinth</a>
+                        <br><a href="https://namemc.com/profile/KreaDex">NameMC</a>
+                        <br>
+                        <br>
+                        <p>Bio updated 28.11.2025</p>
+                        <div class="stats-divider"></div>
+            <div class="site-stats" id="moreStats">
+                <div class="stat-item">
+                    <i><span class="stat-value">${stats.total}</span> views</i>
                 </div>
-                <h1 id="name">KreaDex</h1>
-                <p id="desc">
-        Меня зовут Паша, иногда я известен под прозвищами Пахан или Паханко. Мне 14 лет. <br><br>Изучаю программирование. Частично знаю Python. Работал в Blender 3D. Художник, дизайнер, монтажёр, моделлер. Больше всего интересует игра Minecraft. В последнее время очень интересует программирование. <br><br>Пытаюсь сделать интересные проекты. </p>
-                <!-- Соцсети -->
-                <div class="links"><a href="https://t.me/kreadex" title="Telegram"><i class="fab fa-telegram"></i></a><a href="https://x.com/kreadexx" title="X"><i class="fab fa-x-twitter"></i></a><a href="https://youtube.com/@kreadex" title="YouTube"><i class="fab fa-youtube"></i></a><a href="https://discord.gg/5evUH6BbCV" title="Discord"><i class="fab fa-discord"></i></a><a href="https://github.com/kreadex" title="GitHub"><i class="fab fa-github"></i></a><a href="https://boosty.to/pahan3568" title="Boosty"><i class="fa-solid fa-money-bill-wave"></i></a><a href="https://www.twitch.tv/kreadex" title="Twitch"><i class="fab fa-twitch"></i><a href="https://www.artstation.com/kreadex" title="ArtStation"><i class="fab fa-artstation"></i></a>
-                    <!-- Троеточие -->
-                    <div class="more">
-                        <button onclick="toggleMore()">⋮</button>
-                        <div class="more-content" id="moreContent">
-                            <a href="https://www.donationalerts.com/r/kreadex">Donation Alerts</a>
-                            <br><a href="https://modrinth.com/user/kreadex">Modrinth</a>
-                            <br><a href="https://namemc.com/profile/KreaDex">NameMC</a>
-                            <br>
-                            <br>
-                            <p>Bio updated 30.09.2025</p>
-                            <p>© KreaDex 2025</p>
-                        </div>
+            </div>
                     </div>
                 </div>
             </div>
+            <div>
+                <nav class="projects-nav-2">
+                    <a href="orders.html" class="nav-btn">
+                    <i class="fas fa-shopping-cart"></i>
+                    Заказы
+                    </a>
+                    <a href="projects.html" class="nav-btn">
+                    <i class="fas fa-briefcase"></i>
+                    Проекты
+                    </a>
+                </nav>
+            </div>
         </div>
-        <script>
-    // Переключатель языка
-    function setLang(lang) {
-      const name = document.getElementById("name");
-      const desc = document.getElementById("desc");
+    </div>
 
-      name.style.opacity = 0;
-      desc.style.opacity = 0;
-
-      setTimeout(() => {
-        if (lang === "ru") {
-          name.innerText = "KreaDex";
-          desc.innerHTML = "Меня зовут Паша, иногда я известен под прозвищами Пахан или Паханко. Мне 14 лет.<br><br>Изучаю программирование. Частично знаю Python. Работал в Blender 3D. Художник, дизайнер, монтажёр, моделлер. Больше всего интересует игра Minecraft. В последнее время очень интересует программирование.<br><br>Пытаюсь сделать интересные проекты.";
-        } else {
-          name.innerText = "KreaDex";
-          desc.innerHTML = "My name is Pasha, sometimes known by the nicknames Pahan or Pahanko. I am 14 years old.<br><br>I study programming and have some knowledge of Python. I have worked in Blender 3D and am an artist, designer, video editor, and 3D modeler. My main interest is Minecraft. Lately, I've become very interested in programming. <br><br>I enjoy making interesting projects.";
-        }
-        name.style.opacity = 1;
-        desc.style.opacity = 1;
-      }, 300);
-    }
-
-    // Троеточие
-    function toggleMore() {
-      const more = document.getElementById("moreContent");
-      more.classList.toggle("show");
-    }
-  </script>
-    </body>
+    <script src="bio-script.js"></script>
+    <script src="game-script.js"></script>
+    <script src="stats-script.js"></script>
+</body>
 </html>

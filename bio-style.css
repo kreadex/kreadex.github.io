@@ -1,0 +1,266 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background: #121212;
+    color: #f5f5f5;
+    overflow-x: hidden;
+    padding: 15px;
+}
+
+.bio-card {
+    background: rgba(30, 30, 30, 0.85);
+    border-radius: 20px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+    max-width: 850px;
+    width: 100%;
+    position: relative;
+    align-items: center;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 100;
+}
+
+.bio-img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.bio-info {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    position: relative;
+    text-align: center;
+}
+
+.lang-switch {
+    margin-bottom: 15px;
+    align-self: center;
+}
+
+.lang-switch button {
+    border: none;
+    background: rgba(42, 42, 42, 0.8);
+    color: #f5f5f5;
+    padding: 8px 15px;
+    margin: 0 5px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.2s;
+    backdrop-filter: blur(5px);
+    font-size: 14px;
+}
+
+.lang-switch button:hover {
+    background: rgba(68, 68, 68, 0.8);
+}
+
+.bio-info h1, .bio-info p {
+    margin: 0 0 15px;
+    transition: opacity 0.3s ease;
+}
+
+.bio-info h1 {
+    font-size: 22px;
+    line-height: 1.2;
+}
+
+.bio-info p {
+    font-size: 14px;
+    line-height: 1.4;
+    text-align: left;
+}
+
+.links {
+    display: flex;
+    
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.links a {
+    font-size: 24px;
+    color: #aaa;
+    transition: color 0.3s, transform 0.2s;
+    padding: 5px;
+}
+
+.links a:hover {
+    color: #fff;
+    transform: scale(1.2);
+}
+
+.more {
+    position: relative;
+}
+
+.more button {
+    border: none;
+    background: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #aaa;
+    transition: color 0.2s;
+    padding: 5px 10px;
+}
+
+.more button:hover {
+    color: #fff;
+}
+
+.more-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(42, 42, 42, 0.95);
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+    width: 280px;
+    max-width: 90vw;
+    z-index: 10;
+    opacity: 0;
+    transform: translateX(-50%) translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    backdrop-filter: blur(10px);
+    text-align: center;
+}
+
+.more-content.show {
+    display: block;
+    opacity: 1;
+    transform: translateX(0%) translateY(-335px);
+}
+
+.more-content a {
+    display: block;
+    margin-bottom: -25px;
+    color: #aaa;
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.2s;
+    padding: 5px 0;
+}
+
+.more-content a:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+
+/* Стили для статистики в more */
+.stats-divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 12px 0;
+}
+
+.site-stats {
+    padding: 10px 0;
+}
+
+.site-stats h4 {
+    margin-bottom: 10px;
+    color: #e0e0e0;
+    font-size: 20px;
+}
+
+.site-stats .stat-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+    font-size: 20px;
+    padding: 0 5px;
+}
+
+.site-stats .stat-label {
+    color: #aaa;
+    text-align: left;
+    flex: 1;
+}
+
+.site-stats .stat-value {
+    color: #4ecdc4;
+    font-weight: bold;
+    font-family: 'Courier New', monospace;
+    text-align: right;
+    flex-shrink: 0;
+    margin-left: 10px;
+}
+
+/* Планшеты */
+@media (min-width: 768px) {
+    .bio-card {
+        flex-direction: row;
+        text-align: left;
+        padding: 25px;
+    }
+    
+    .bio-info {
+        text-align: left;
+    }
+    
+    .lang-switch {
+        align-self: flex-end;
+    }
+    
+    .bio-img {
+        width: 200px;
+        height: 180px;
+    }
+    
+    .bio-info h1 {
+        font-size: 24px;
+    }
+    
+    .bio-info p {
+        font-size: 15px;
+    }
+    
+    .more-content {
+        left: auto;
+        right: 0;
+        transform: translateY(-10px);
+    }
+    
+    .more-content.show {
+        transform: translateY(5px);
+    }
+}
+
+/* Десктоп */
+@media (min-width: 1024px) {
+    .bio-card {
+        padding: 30px;
+    }
+    
+    .bio-img {
+        width: 230px;
+        height: 200px;
+    }
+    
+    .links a {
+        font-size: 28px;
+    }
+}

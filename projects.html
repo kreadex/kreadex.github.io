@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>KreaDex - Projects</title>
+    <link rel="icon" href="/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="projects-style.css">
+    <link rel="stylesheet" href="game-style.css">
+</head>
+<body>
+    <!-- Canvas для игры "Жизнь" -->
+    <canvas id="gameCanvas"></canvas>
+
+    <!-- Элементы управления игрой -->
+    <div class="controls-toggle" id="controlsToggle">⚙️</div>
+
+    <div class="controls-panel" id="controlsPanel">
+        <div class="control-group">
+            <div class="control-label">Управление</div>
+            <div class="buttons-row">
+                <button type="button" id="startBtn">Старт</button>
+                <button type="button" id="pauseBtn" disabled>Пауза</button>
+                <button type="button" id="stepBtn">Шаг</button>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <div class="buttons-row">
+                <button type="button" id="clearBtn">Очистить</button>
+                <button type="button" id="randomBtn">Случайно</button>
+                <button type="button" id="removeRandomBtn">Убрать 50%</button>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <div class="control-label">Размер кисти</div>
+            <div class="slider-control">
+                <input type="range" id="brushSize" min="1" max="8" value="3">
+                <span id="brushSizeValue">3</span>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <div class="control-label">Скорость</div>
+            <div class="slider-control">
+                <input type="range" id="speedSlider" min="30" max="300" value="180">
+                <span id="speedValue">180</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="stats" id="stats">
+        <div class="stat-item">
+            <div class="stat-value" id="generation">0</div>
+            <div class="stat-label">Поколение</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value" id="liveCells">0</div>
+            <div class="stat-label">Клеток</div>
+        </div>
+    </div>
+
+    <div class="hint">© KreaDex 2025</div>
+
+    <!-- Основной контент -->
+    <div class="projects-container">
+        <header class="projects-header">
+            <h1>Мои Проекты</h1>
+            <p>Здесь собраны мои работы в разных областях</p>
+        </header>
+
+        <!-- Фильтры -->
+        <div class="filters-section">
+            <div class="filter-group">
+                <h3>Категории</h3>
+                <div class="filter-tags">
+                    <button type="button" class="filter-tag active" data-filter="all">Все</button>
+                    <button type="button" class="filter-tag" data-filter="programming">Программирование</button>
+                    <button type="button" class="filter-tag" data-filter="design">Дизайн</button>
+                    <button type="button" class="filter-tag" data-filter="3d">3D Графика</button>
+                    <button type="button" class="filter-tag" data-filter="video">Видео</button>
+                    <button type="button" class="filter-tag" data-filter="minecraft">Minecraft</button>
+                    <button type="button" class="filter-tag" data-filter="bot">Боты</button>
+                </div>
+            </div>
+            <div class="filter-group">
+                <h3>Статус</h3>
+                <div class="filter-tags">
+                    <button type="button" class="filter-tag active" data-status="all">Все</button>
+                    <button type="button" class="filter-tag" data-status="completed">Завершён</button>
+                    <button type="button" class="filter-tag" data-status="in-progress">В работе</button>
+                    <button type="button" class="filter-tag" data-status="planned">Планируется</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Карточки проектов -->
+        <div class="projects-grid" id="projectsGrid">
+            <!-- Проекты будут добавляться через JavaScript -->
+        </div>
+
+        <!-- Навигация -->
+        <nav class="projects-nav">
+            <a href="index.html" class="nav-btn">
+                <i class="fas fa-home"></i>
+                Главная
+            </a>
+            <a href="orders.html" class="nav-btn">
+                <i class="fas fa-shopping-cart"></i>
+                Заказы
+            </a>
+        </nav>
+    </div>
+
+    <script src="game-script.js"></script>
+    <script src="projects-script.js"></script>
+    <script src="stats-script.js"></script>
+</body>
+</html>

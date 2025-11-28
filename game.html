@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Game of Life</title>
+    <link rel="icon" href="/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="bio-style.css">
+    <link rel="stylesheet" href="game-style.css">
+</head>
+<body>
+    <!-- Canvas для игры "Жизнь" -->
+    <canvas id="gameCanvas"></canvas>
+    <!-- Элементы управления игрой -->
+    <div class="controls-toggle" id="controlsToggle">⚙️</div>
+    <div class="controls-panel" id="controlsPanel">
+        <div class="control-group">
+            <div class="control-label">Управление</div>
+            <div class="buttons-row">
+                <button type="button" id="startBtn">Старт</button>
+                <button type="button" id="pauseBtn" disabled>Пауза</button>
+                <button type="button" id="stepBtn">Шаг</button>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="buttons-row">
+                <button type="button" id="clearBtn">Очистить</button>
+                <button type="button" id="randomBtn">Случайно</button>
+                <button type="button" id="removeRandomBtn">Убрать 50%</button>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="control-label">Размер кисти</div>
+            <div class="slider-control">
+                <input type="range" id="brushSize" min="1" max="8" value="3">
+                <span id="brushSizeValue">3</span>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="control-label">Скорость</div>
+            <div class="slider-control">
+                <input type="range" id="speedSlider" min="30" max="300" value="180">
+                <span id="speedValue">180</span>
+            </div>
+        </div>
+    </div>
+    <div class="stats" id="stats">
+        <div class="stat-item">
+            <div class="stat-value" id="generation">0</div>
+            <div class="stat-label">Поколение</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value" id="liveCells">0</div>
+            <div class="stat-label">Клеток</div>
+        </div>
+    </div>
+    <div class="hint">© KreaDex 2025</div>
+
+    <script src="game-script.js"></script>
+</body>
+</html>
