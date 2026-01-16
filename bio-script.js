@@ -9,10 +9,10 @@ function setLang(lang) {
     setTimeout(() => {
         if (lang === "ru") {
             name.innerText = "KreaDex";
-            desc.innerHTML = "Меня зовут Паша, иногда я известен под прозвищами Пахан или Паханко. Мне 14 лет.<br><br>Изучаю программирование. Частично знаю Python. Работал в Blender 3D. Художник, дизайнер, монтажёр, моделлер. Больше всего интересует игра Minecraft. В последнее время очень интересует программирование.<br><br>Пытаюсь сделать интересные проекты.";
+            desc.innerHTML = "Меня зовут Паша, иногда я известен под прозвищами Пахан или Паханко. Мне 15 лет.<br><br>Изучаю программирование. Частично знаю Python. Работал в Blender 3D. Художник, дизайнер, монтажёр, моделлер. Больше всего интересует игра Minecraft. В последнее время очень интересует программирование.<br><br>Пытаюсь сделать интересные проекты.";
         } else {
             name.innerText = "KreaDex";
-            desc.innerHTML = "My name is Pasha, sometimes known by the nicknames Pahan or Pahanko. I am 14 years old.<br><br>I study programming and have some knowledge of Python. I have worked in Blender 3D and am an artist, designer, video editor, and 3D modeler. My main interest is Minecraft. Lately, I've become very interested in programming. <br><br>I enjoy making interesting projects.";
+            desc.innerHTML = "My name is Pasha, sometimes known by the nicknames Pahan or Pahanko. I am 15 years old.<br><br>I study programming and have some knowledge of Python. I have worked in Blender 3D and am an artist, designer, video editor, and 3D modeler. My main interest is Minecraft. Lately, I've become very interested in programming. <br><br>I enjoy making interesting projects.";
         }
         name.style.opacity = 1;
         desc.style.opacity = 1;
