@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>KreaDex Crypto</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet" href="error-style.css">
+<link rel="stylesheet" href="game-style.css">
+
+<style>
+
+/* контейнер */
+.crypto-donate{
+display:flex;
+flex-direction:column;
+gap:16px;
+}
+
+/* кошелёк */
+.wallet{
+display:flex;
+align-items:center;
+gap:14px;
+
+background:#2a2d30;
+padding:14px 16px;
+border-radius:14px;
+
+transition:0.25s;
+}
+
+.wallet:hover{
+background:#23232c;
+}
+
+/* иконка */
+.wallet i{
+font-size:26px;
+width:32px;
+text-align:center;
+}
+
+/* инфо */
+.wallet-info{
+display:flex;
+flex-direction:column;
+flex:1;
+min-width:0;
+}
+
+.coin{
+font-size:13px;
+opacity:0.65;
+margin-bottom:3px;
+}
+
+/* адрес */
+.wallet input{
+background:none;
+border:none;
+color:white;
+font-size:13px;
+
+width:100%;
+overflow:hidden;
+text-overflow:ellipsis;
+white-space:nowrap;
+
+pointer-events:none;
+}
+
+/* кнопка копирования */
+.wallet button{
+background:#53575e;
+border:none;
+color:white;
+padding:8px 8px;
+border-radius:8px;
+cursor:pointer;
+transition:0.2s;
+flex-shrink:0;
+max-width: 20px;
+}
+
+.wallet button:hover{
+background:#3a3a48;
+}
+
+/* плашка */
+.toast{
+position:fixed;
+bottom:30px;
+left:50%;
+transform:translateX(-50%) translateY(20px);
+
+background:#1f1f28;
+color:white;
+padding:10px 16px;
+border-radius:10px;
+
+opacity:0;
+pointer-events:none;
+
+transition:0.35s;
+font-size:14px;
+}
+
+.toast.show{
+opacity:1;
+transform:translateX(-50%) translateY(0);
+}
+
+</style>
+</head>
+
+<body>
+<div class="hint">© KreaDex 2025</div>
+
+<div class="error-container">
+<div class="error-content">
+  
+<div class="crypto-donate">
+
+<div class="wallet">
+<i class="fa-brands fa-bitcoin"></i>
+<div class="wallet-info">
+<span class="coin">BTC</span>
+<input value="bc1qpp773dw6hqz4cxdpqc3sy974f05ehdu3w3g2qd" readonly id="btc">
+</div>
+<button onclick="copyWallet('btc')">
+<i class="fa-solid fa-copy"></i>
+</button>
+</div>
+
+<div class="wallet">
+<i class="fa-brands fa-ethereum"></i>
+<div class="wallet-info">
+<span class="coin">ETH / USDT / USDC (ERC-20)</span>
+<input value="0xbcde494e0c7e3db0f74f053b89558f9c04dc7a6a" readonly id="eth">
+</div>
+<button onclick="copyWallet('eth')">
+<i class="fa-solid fa-copy"></i>
+</button>
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="toast" id="toast">Скопировано!</div>
+
+<script>
+
+function copyWallet(id){
+
+const text = document.getElementById(id).value;
+
+navigator.clipboard.writeText(text);
+
+const toast = document.getElementById("toast");
+
+toast.classList.add("show");
+
+setTimeout(()=>{
+toast.classList.remove("show");
+},2000);
+
+}
+
+</script>
+
+</body>
+</html>
